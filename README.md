@@ -97,6 +97,7 @@ You should see the following output in the terminal:
 ![alt text][first_build_img]
 
 The output tells us:
+
 - `Hash: fad8e0369a2e75a200a6`: The hash of the build. You can use this to invalidate assets through `[hash]` placeholder.
 - `Version: webpack 1.13.3`: Webpack version.
 - `Time: 44ms`: Time it took to execute the build.
