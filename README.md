@@ -64,7 +64,7 @@ The `index.html` will contain a pretty basic HTML page, whose only purpose is to
   </body>
 </html>
 ```
-The Hello.js is simply a function that returns a new HTML element with a hello message.
+The `Hello.js` is simply a function that returns a new HTML element with a hello message.
 
 **src/Hello.js**
 
@@ -96,7 +96,7 @@ You should see the following output in the terminal:
 
 ![alt text][first_build_img]
 
-If you open the index.html file on the browser, the result will look like this:
+If you open the `index.html` file on the browser, the result will look like this:
 
 ![alt text][first_output_img]
 
