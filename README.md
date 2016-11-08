@@ -96,6 +96,13 @@ You should see the following output in the terminal:
 
 ![alt text][first_build_img]
 
+The output tells us:
+- `Hash: fad8e0369a2e75a200a6`: The hash of the build. You can use this to invalidate assets through `[hash]` placeholder.
+- `Version: webpack 1.13.3`: Webpack version.
+- `Time: 44ms`: Time it took to execute the build.
+- `bundle.js 1.69 kB 0 [emitted] main`: Name of the generated asset, size, the ids of the chunks into which it is related, status information telling how it was generated, name of the chunk.
+- `[0] ./src/main.js 94 bytes {0} [built]`: The id of the generated asset, name, size, entry chunk id, the way it was generated.
+
 If you open the `index.html` file on the browser, the result will look like this:
 
 ![alt text][first_output_img]
