@@ -100,7 +100,7 @@ If you open the `index.html` file on the browser, the result will look like this
 
 ![alt text][first_output_img]
 
-## <a name="sources"></a>12. Sources ##
+## Sources
 - [SurviveJS]
 - [Pro React]
 
