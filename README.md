@@ -6,6 +6,8 @@ This step introduces the Webpack Dev Server and the Source Maps option.
 
 To start clone this project:
 
+This is a step by step tutorial to show how set up a React project using Webpack.
+
 ```
 git clone --branch 3_step https://github.com/francescabassi/webpack-tutorial.git
 ```
