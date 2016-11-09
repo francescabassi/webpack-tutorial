@@ -1,6 +1,6 @@
 # WEBPACK TUTORIAL - STEP 1 - Getting Started
 
-This is a step by step tutorial to show how set up a React project using Webpack.
+In this first step we set up the project structure and the initial files to start the configuration.
 
 ## Setup
 
