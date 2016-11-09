@@ -1,10 +1,8 @@
-# WEBPACK TUTORIAL
+# WEBPACK TUTORIAL - STEP 1 - Getting Started
 
 This is a step by step tutorial to show how set up a React project using Webpack.
 
-## STEP 1 - Getting Started
-
-### Setup
+## Setup
 
 To start clone this project:
 
@@ -12,7 +10,7 @@ To start clone this project:
 git clone --branch 1_step https://github.com/francescabassi/webpack-tutorial.git
 ```
 
-### Usage
+## Usage
 
 Install the dependencies:
 
