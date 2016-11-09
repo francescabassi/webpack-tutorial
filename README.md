@@ -2,7 +2,7 @@
 
 This is a step by step tutorial to show how set up a React project using Webpack.
 
-## STEP 1
+## STEP 1 - Getting Started
 
 ### Setup
 
