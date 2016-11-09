@@ -69,7 +69,7 @@ Executing a long command such as `node_modules/.bin/webpack` is boring and error
 }
 ```
 
-To make it easier to develop our configuration, we can integrate a tool known as [webpack-validator] to our project. It will validate the configuration against a schema and warn if we are trying to do something not sensible. This takes some pain out of learning and using Webpack.
+To make it easier to develop our configuration, we can integrate a _tool_ known as [webpack-validator] to our project. It will validate the configuration against a schema and warn if we are trying to do something not sensible. This takes some pain out of learning and using Webpack.
 
 ```
 npm i webpack-validator --save-dev
