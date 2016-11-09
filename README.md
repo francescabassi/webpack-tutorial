@@ -1,6 +1,6 @@
 # WEBPACK TUTORIAL - STEP 2 - Configuring Webpack
 
-This is a step by step tutorial to show how set up a React project using Webpack.
+In the second step we introduce the Webpack configuration file.
 
 ## Setup
 
