@@ -1,13 +1,13 @@
-# WEBPACK TUTORIAL - STEP 3 - Webpack Development Server and Source Maps
+# WEBPACK TUTORIAL - STEP 5 - CSS
 
-This step introduces the Webpack Dev Server and the Source Maps option.
+In this step we discover the loaders for the stylesheets and the css modules.
 
 ## Setup
 
 To start clone this project:
 
 ```
-git clone --branch 3_step https://github.com/francescabassi/webpack-tutorial.git
+git clone --branch 5_step https://github.com/francescabassi/webpack-tutorial.git
 ```
 
 ## Usage
@@ -24,7 +24,7 @@ To start the webpack-dev-server mode:
 npm start
 ```
 
-You can see the result open in your browser the http://localhost:8080/ url.
+You can see the result open in your browser the [http://localhost:8080/] url.
 
 Then build the project:
 
@@ -34,24 +34,17 @@ npm run build
 
 ## Tutorial
 
-Through the use of loaders, webpack can preprocess the source files through external scripts and tools as it loads them to apply all kinds of changes and transformations.
+One of Webpack's most unique characteristics is that it can treat every kind of file as a module, not only your JavaScript code, but also CSS, fonts, with the appropriate loaders, all can be treated as modules. Webpack can follow @import and URL values in CSS through all dependency three and then build, preprocess and bundle your assets.
 
-Loaders need to be installed separately and should be configured under the `modules` key in `webpack.config.js`. Loader configuration setting include:
+Webpack provides two loaders to deal with stylesheets: css-loader and style-loader. While the css-loader looks for @import and url statements and resolves them, the style-loader adds all the computed style rules into the page. Combined together, these loaders enable you to embed stylesheets into a Webpack JavaScript bundle.
 
-- `test`: a regular expression that matches the file extensions that should run through this loader (**required**).
-- `loader`: the name of the loader (**required**).
-- `include / exclude`: optional setting to manually set which folders and files the loader should explicitly add or ignore.
-- `query`: the query setting can be used to pass additional options to the loader.
-
-Webpack's loaders are always evaluated from right to left and from bottom to top (separate definitions).
-
-We see the use of loaders when we use React. Facebook's React is a popular alternative for developing web applications. Most React setups rely on a transpiler known as Babel. Most of the React code out there relies on a format known as JSX. It is a superset of JavaScript that allows you to mix XMLish syntax with JavaScript. Babel allows us to use JSX with React easily.
-
-First, install babel:
+Start by installing both css-loader and style-loader with npm:
 
 ```
-npm install --save-dev babel-core babel-loader babel-preset-es2015 babel-preset-react
+npm install --save-dev style-loader css-loader
 ```
+
+In sequence, update the webpack configuration file:
 
 **webpack.config.js**
 
@@ -59,50 +52,29 @@ npm install --save-dev babel-core babel-loader babel-preset-es2015 babel-preset-
 ...
 module: {
   loaders: [
+    ...
     {
-      test: /\.js$/,
-      exclude: /node_modules/,
-      loader: 'babel'
+      test: /\.css$/,
+      loader: 'style!css'
     }
   ]
 },
 ...
 ```
 
-Babel can be entirely configured within `webpack.config.js`, but since it has many configuration settings we opt to create a separate babel resource configuration - a `.babelrc` file.
+The exclamation point ("!") can be used in a loader configuration to chain different loaders to the same file types.
 
-**.babelrc**
+**src/main.css**
 
-```json
-{
-  "presets": ["react", "es2015"]
+```css
+body {
+  background: #EDEDED;
 }
 ```
 
-Now that your webpack configuration makes it possible to use ES6 modules and syntax, as well as JSX, let's install React and React-DOM:
+Finally, remember that Webpack starts on an entry file defined in the configuration file and build all the dependency three by following statements like import, require, url among others. This means that your main CSS file must also be imported somewhere in the application in order for webpack to "find" it.
 
-```
-npm install --save react react-dom
-```
-
-Let's refactor the sample project to make use of these features.
-
-**src/Hello.js**
-```javascript
-import React, {Component} from 'react'
-
-class Hello extends Component{
-  render() {
-    return (
-      <div>
-        Hello!
-      </div>
-    );
-  }
-}
-
-export default Hello
-```
+In the sample project, let's import the `main.css` from the `main.js` entry point:
 
 **src/main.js**
 
@@ -110,9 +82,74 @@ export default Hello
 import React from 'react';
 import {render} from 'react-dom';
 import Hello from './Hello';
+import './main.css';
 
 render(<Hello />, document.getElementById('content'));
 ```
+
+### CSS Modules
+
+Modules let the developer break the code down into small, clean and independent units with explicitly declared dependencies.
+A recent project called [CSS modules] aim to bring all these advantages to CSS. With CSS modules, all class names and are scoped locally by default. Webpack embraced the CSS modules proposal from the very beginning, it's built in the CSS loader - all you have to do is activate it by passing the `modules` query string. With this feature enabled, you will be able to export class names from CSS into the consuming component code, locally scoped (so you don't need to worry about having many classes with the same name across different components).
+
+**webpack.config.js**
+
+```javascript
+...
+module: {
+  loaders: [
+    ...
+    {
+      test: /\.module.css$/,
+      loader: 'style!css?modules'
+    },
+    {
+      test: /^((?!\.module).)*css$/,
+      loader: 'style!css'
+    }
+  ]
+},
+...
+```
+**src/hello.module.css**
+
+```css
+.root {
+  color: #AA1C0D;
+  padding: 10px;
+  font-size: 15px;
+}
+
+```
+**src/Hello.js**
+
+```javascript
+import React, {Component} from 'react';
+import styles from './hello.module.css';
+
+class Hello extends Component{
+  render() {
+    return (
+      <div className={styles.root}>
+        Hello!
+      </div>
+    );
+  }
+}
+
+export default Hello;
+```
+Notice in the code above how the css classes were imported into a variable (styles) and are individually applied to a JSX element.
+
+Also notice that any other component with it's own separate CSS module can also use the same class names without interference: even highly common style names such as "root", "header", "footer", just to name a few, can now be used safely in local scope.
+
+### Other useful loaders
+
+- `json-loader`
+- `url-loader`
+- `file-loader`
+- `less-loader`
+- `sass-loader`
 
 ## Sources
 - [SurviveJS]
@@ -120,3 +157,5 @@ render(<Hello />, document.getElementById('content'));
 
 [SurviveJS]: <http://survivejs.com/webpack/introduction/>
 [Pro React]: <http://www.pro-react.com/materials/appendixA/>
+[http://localhost:8080/]: <http://localhost:8080/>
+[CSS modules]: <https://github.com/css-modules/css-modules>
