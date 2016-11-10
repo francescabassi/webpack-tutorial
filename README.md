@@ -30,7 +30,7 @@ Then build the project:
 npm run build
 ```
 
-You can see the result open in your browser the http://localhost:8080/ url.
+You can see the result open in your browser the [http://localhost:8080/] url.
 
 ## Tutorial
 
@@ -96,7 +96,7 @@ To integrate webpack-dev-server to our project, we can define a new command to t
 ...
 ```
 
-After you run the `npm start` command, should open http://localhost:8080/ at your browser and you should see something.
+After you run the `npm start` command, should open [http://localhost:8080/] at your browser and you should see something.
 
 ---
 
@@ -138,3 +138,4 @@ const config = {
 [Pro React]: <http://www.pro-react.com/materials/appendixA/>
 [this post]: <http://cheng.logdown.com/posts/2016/03/25/679045>
 [CHENG'S BLOG - Webpack devtool source map]: <http://cheng.logdown.com/posts/2016/03/25/679045>
+[http://localhost:8080/]: <http://localhost:8080/>
