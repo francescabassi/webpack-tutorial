@@ -1,13 +1,13 @@
-# WEBPACK TUTORIAL - STEP 3 - Webpack Development Server and Source Maps
+# WEBPACK TUTORIAL - STEP 4 - Loaders
 
-This step introduces the Webpack Dev Server and the Source Maps option.
+This step introduces the loaders, in particular the ones used with React.
 
 ## Setup
 
 To start clone this project:
 
 ```
-git clone --branch 3_step https://github.com/francescabassi/webpack-tutorial.git
+git clone --branch 4_step https://github.com/francescabassi/webpack-tutorial.git
 ```
 
 ## Usage
@@ -24,7 +24,7 @@ To start the webpack-dev-server mode:
 npm start
 ```
 
-You can see the result open in your browser the http://localhost:8080/ url.
+You can see the result open in your browser the [http://localhost:8080/] url.
 
 Then build the project:
 
@@ -120,3 +120,4 @@ render(<Hello />, document.getElementById('content'));
 
 [SurviveJS]: <http://survivejs.com/webpack/introduction/>
 [Pro React]: <http://www.pro-react.com/materials/appendixA/>
+[http://localhost:8080/]: <http://localhost:8080/>
