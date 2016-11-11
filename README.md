@@ -1,13 +1,13 @@
-# WEBPACK TUTORIAL - STEP 6 - Plugins
+# WEBPACK TUTORIAL - STEP 7 - Linting
 
-In this step we discover the plugins, particularly the Hot Module Replacement plugin.
+Linting
 
 ## Setup
 
 To start clone this project:
 
 ```
-git clone --branch 6_step https://github.com/francescabassi/webpack-tutorial.git
+git clone --branch 7_step https://github.com/francescabassi/webpack-tutorial.git
 ```
 
 ## Usage
@@ -34,81 +34,153 @@ npm run build
 
 ## Tutorial
 
-Webpack can be extended through plugins. In Webpack, plugins have the ability to inject themselves into the build process to introduce custom behaviors.
+Nothing is easier than making mistakes when coding in JavaScript. Linting is one of those techniques that can help you to make less mistakes. You can spot issues before they become actual problems.
 
-Loaders and plugins are commonly confused with each other, but they are completely different things. Roughly speaking, loaders deal with each source file, one at a time, as they are "loaded" by webpack during the build process. Plugins in the other hand do not operate on individual source files: they influence the build process as a whole.
+[ESLint] is the newest tool in vogue. ESLint goes to the next level as it allows you to implement custom rules, parsers, and reporters. ESLint works with Babel and JSX syntax making it ideal for React projects. The project rules have been documented well and you have full control over their severity.
 
-Webpack comes with many built-in plugins, but there are lots of third party plugins available.
+Besides linting for issues, it can be useful to manage the code style: stylistically consistent code reads better and is easier to work with. Linting tools allow you to do this.
 
-To use a plugin, install it using npm (if it's not built-in), import the plugin in the webpack configuration file and add an instance of the plugin object to an `plugins` array.
+Let’s get started by installing the [eslint] package.
 
-### Hot Module Replacement
+```
+npm --save-dev install eslint
+```
 
-Hot Module Replacement (or HMR for short) gives the ability to tweak your components in real time - any changes in the CSS and JS get reflected in the browser instantly without refreshing the page. In other words, the current application state persists even when you change something in the underlying code.
+We have to tell Webpack that we want to use eslint in our build. Therefore we can install [eslint-loader].
 
-Enabling HMR in Webpack is simple, you will need to make two configurations:
+```
+npm --save-dev install eslint-loader
+```
 
-1. Add the HotModuleReplacementPlugin to webpack's configuration.
-2. Add the `hot` parameter to the Webpack Dev Server configuration.
-
-JavaScript modules won't be automatically eligible for hot replacement. Webpack provides an API which you need to implement in your JavaScript modules in order to allow them to be hot replaceable. Although this API isn't difficult to use, there is a more practical way: using Babel.
-
-With the use of a Babel plugin, it is possible to use Webpack to make an additional transformation and add all needed code into your React components to make them hot-replaceable. Babel has a plugin called [react-transform-hmr] that inserts the required HMR code automatically in all your React components.
+Now we can use the loader in our Webpack configuration, before the babelo loader, in the preLoaders field.
 
 **webpack.config.js**
 
 ```javascript
-var webpack = require('webpack');
-var HtmlWebpackPlugin = require('html-webpack-plugin');
 ...
-plugins: [
-  new webpack.HotModuleReplacementPlugin()
-],
-devServer: {
-  historyApiFallback: true,
-  inline: true,
-  hot: true
-}
+module: {
+  preLoaders: [
+    {
+      test: /\.js$/,
+      exclude: /node_modules/,
+      loader: 'eslint-loader'
+    },
+  ],
+  loaders: [
+    ...
+  ]
+},
 ...
 ```
 
-Install the required Babel plugins with npm:
+Additionally we have to use babel-eslint to lint all valid ES6 code.
 
 ```
-npm install --save-dev babel-plugin-react-transform react-transform-hmr
+npm install --save-dev babel-eslint
 ```
 
-**.babelrc**
+Let’s add some code style checking for React. Therefore we need to add the [eslint-plugin-react].
+
+```
+npm --save-dev install eslint-plugin-react
+```
+
+Now we have to set up the .eslintrc file:
+
+**.eslintrc**
 
 ```json
 {
-  "presets": ["react", "es2015"],
-  "env": {
-    "development": {
-    "plugins": [["react-transform", {
-       "transforms": [{
-         "transform": "react-transform-hmr",
-         "imports": ["react"],
-         "locals": ["module"]
-       }]
-     }]]
-    }
+  "parser": "babel-eslint",
+  "plugins": [
+    "react"
+  ],
+  "rules": {
   }
 }
 ```
 
-### Others Plugin
+After that, let’s require the file in our Webpack configuration.
 
-- `bannerPlugin`: is a simple built-in plugin. Its purpose is to add any given string to the top of the generated bundle file.
-- `HtmlWebpackPlugin`: is a third party webpack plugin that generates the final HTML5 file for you and include all your webpack bundles. This is especially useful for production builds, where hashes that change on every compilation are added to bundle filenames. [Here] for more information.
+**webpack.config.js**
 
+```javascript
+...
+eslint: {
+  configFile: './.eslintrc'
+},
+...
+```
+
+We can either specify our rules within the webpack configuration or follow a best practice to have a dedicated file for the rules.
+Since we don’t want to specify our own rule set every time, there are plenty of best practices rules out there. One of them is the [Airbnb Style Guide]. Moreover Airbnb open sourced its own [ESLint configuration].
+
+```
+npm --save-dev install eslint-config-airbnb eslint-plugin-import eslint-plugin-jsx-a11y
+```
+
+Now we can add a one-liner to our ESLint configuration to use Airbnbs’ ESLint configuration.
+
+**.eslintrc**
+
+```json
+{
+  "parser": "babel-eslint",
+  "extends": "airbnb",
+  "plugins": [
+    "react"
+  ],
+  "ecmaFeatures": {
+    "modules": true,
+    "jsx": true
+  },
+  "env": {
+    "browser": true,
+    "es6": true,
+    "node": true
+  },
+  "rules": {
+    "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }],
+    "quotes": [2, "single"],
+    "react/prefer-stateless-function": [0, { "ignorePureComponents": true }],
+  }
+}
+
+```
+
+Now we are ready to fix all the ESLint errors in our code base!
+You can either fix the error in the mentioned file or disable the rule, when you think you don’t need it.
+
+The severity of an individual rule is defined by a number as follows:
+
+- 0 - The rule has been disabled.
+- 1 - The rule will emit a warning.
+- 2 - The rule will emit an error.
+
+But rather than disabling it globally, you can also do it for a specific line in your codebase.
+For example:
+
+```
+/*eslint-disable no-unused-vars*/
+import SC from 'soundcloud';
+/*eslint-enable no-unused-vars*/
+import React from 'react';
+import ReactDOM from ‘react-dom';
+...
+```
 
 ## Sources
 - [SurviveJS]
 - [Pro React]
+- [ESLint in React + Babel + Webpack]
 
 [SurviveJS]: <http://survivejs.com/webpack/introduction/>
 [Pro React]: <http://www.pro-react.com/materials/appendixA/>
 [http://localhost:8080/]: <http://localhost:8080/>
-[react-transform-hmr]: <https://github.com/gaearon/react-transform-hmr>
-[here]: <https://github.com/ampedandwired/html-webpack-plugin>
+[ESLint]: <http://eslint.org/>
+[eslint]: <https://github.com/eslint/eslint>
+[eslint-loader]: <https://github.com/MoOx/eslint-loader>
+[eslint-plugin-react]: <https://github.com/yannickcr/eslint-plugin-react>
+[Airbnb Style Guide]: <https://github.com/airbnb/javascript>
+[ESLint configuration]: <https://www.npmjs.com/package/eslint-config-airbnb>
+[ESLint in React + Babel + Webpack]: <https://medium.com/@tkssharma/eslint-in-react-babel-webpack-9cb1c4e86f4e#.d9llmp5pb>
