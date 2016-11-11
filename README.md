@@ -1,6 +1,6 @@
 # WEBPACK TUTORIAL - STEP 7 - Linting
 
-Linting
+In this step we talk about linting.
 
 ## Setup
 
@@ -52,7 +52,7 @@ We have to tell Webpack that we want to use eslint in our build. Therefore we ca
 npm --save-dev install eslint-loader
 ```
 
-Now we can use the loader in our Webpack configuration, before the babelo loader, in the preLoaders field.
+Now we can use the loader in our Webpack configuration, before the babel loader, in the preLoaders field.
 
 **webpack.config.js**
 
@@ -120,6 +120,7 @@ npm --save-dev install eslint-config-airbnb eslint-plugin-import eslint-plugin-j
 ```
 
 Now we can add a one-liner to our ESLint configuration to use Airbnbs’ ESLint configuration.
+Also we add all the rules, environment and ecma features that we need.
 
 **.eslintrc**
 
