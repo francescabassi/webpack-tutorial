@@ -1,13 +1,13 @@
-# WEBPACK TUTORIAL - STEP 5 - CSS
+# WEBPACK TUTORIAL - STEP 6 - Plugins
 
-In this step we discover the loaders for the stylesheets and the css modules.
+In this step we discover the plugins, particularly the Hot Module Replacement plugin.
 
 ## Setup
 
 To start clone this project:
 
 ```
-git clone --branch 5_step https://github.com/francescabassi/webpack-tutorial.git
+git clone --branch 6_step https://github.com/francescabassi/webpack-tutorial.git
 ```
 
 ## Usage
@@ -34,122 +34,74 @@ npm run build
 
 ## Tutorial
 
-One of Webpack's most unique characteristics is that it can treat every kind of file as a module, not only your JavaScript code, but also CSS, fonts, with the appropriate loaders, all can be treated as modules. Webpack can follow @import and URL values in CSS through all dependency three and then build, preprocess and bundle your assets.
+Webpack can be extended through plugins. In Webpack, plugins have the ability to inject themselves into the build process to introduce custom behaviors.
 
-Webpack provides two loaders to deal with stylesheets: css-loader and style-loader. While the css-loader looks for @import and url statements and resolves them, the style-loader adds all the computed style rules into the page. Combined together, these loaders enable you to embed stylesheets into a Webpack JavaScript bundle.
+Loaders and plugins are commonly confused with each other, but they are completely different things. Roughly speaking, loaders deal with each source file, one at a time, as they are "loaded" by webpack during the build process. Plugins in the other hand do not operate on individual source files: they influence the build process as a whole.
 
-Start by installing both css-loader and style-loader with npm:
+Webpack comes with many built-in plugins, but there are lots of third party plugins available.
 
-```
-npm install --save-dev style-loader css-loader
-```
+To use a plugin, install it using npm (if it's not built-in), import the plugin in the webpack configuration file and add an instance of the plugin object to an `plugins` array.
 
-In sequence, update the webpack configuration file:
+### Hot Module Replacement
 
-**webpack.config.js**
+Hot Module Replacement (or HMR for short) gives the ability to tweak your components in real time - any changes in the CSS and JS get reflected in the browser instantly without refreshing the page. In other words, the current application state persists even when you change something in the underlying code.
 
-```javascript
-...
-module: {
-  loaders: [
-    ...
-    {
-      test: /\.css$/,
-      loader: 'style!css'
-    }
-  ]
-},
-...
-```
+Enabling HMR in Webpack is simple, you will need to make two configurations:
 
-The exclamation point ("!") can be used in a loader configuration to chain different loaders to the same file types.
+1. Add the HotModuleReplacementPlugin to webpack's configuration.
+2. Add the `hot` parameter to the Webpack Dev Server configuration.
 
-**src/main.css**
+JavaScript modules won't be automatically eligible for hot replacement. Webpack provides an API which you need to implement in your JavaScript modules in order to allow them to be hot replaceable. Although this API isn't difficult to use, there is a more practical way: using Babel.
 
-```css
-body {
-  background: #EDEDED;
-}
-```
-
-Finally, remember that Webpack starts on an entry file defined in the configuration file and build all the dependency three by following statements like import, require, url among others. This means that your main CSS file must also be imported somewhere in the application in order for webpack to "find" it.
-
-In the sample project, let's import the `main.css` from the `main.js` entry point:
-
-**src/main.js**
-
-```javascript
-import React from 'react';
-import {render} from 'react-dom';
-import Hello from './Hello';
-import './main.css';
-
-render(<Hello />, document.getElementById('content'));
-```
-
-### CSS Modules
-
-Modules let the developer break the code down into small, clean and independent units with explicitly declared dependencies.
-A recent project called [CSS modules] aim to bring all these advantages to CSS. With CSS modules, all class names and are scoped locally by default. Webpack embraced the CSS modules proposal from the very beginning, it's built in the CSS loader - all you have to do is activate it by passing the `modules` query string. With this feature enabled, you will be able to export class names from CSS into the consuming component code, locally scoped (so you don't need to worry about having many classes with the same name across different components).
+With the use of a Babel plugin, it is possible to use Webpack to make an additional transformation and add all needed code into your React components to make them hot-replaceable. Babel has a plugin called [react-transform-hmr] that inserts the required HMR code automatically in all your React components.
 
 **webpack.config.js**
 
 ```javascript
+var webpack = require('webpack');
+var HtmlWebpackPlugin = require('html-webpack-plugin');
 ...
-module: {
-  loaders: [
-    ...
-    {
-      test: /\.module.css$/,
-      loader: 'style!css?modules'
-    },
-    {
-      test: /^((?!\.module).)*css$/,
-      loader: 'style!css'
-    }
-  ]
-},
-...
-```
-**src/hello.module.css**
-
-```css
-.root {
-  color: #AA1C0D;
-  padding: 10px;
-  font-size: 15px;
+plugins: [
+  new webpack.HotModuleReplacementPlugin()
+],
+devServer: {
+  historyApiFallback: true,
+  inline: true,
+  hot: true
 }
+...
+```
+
+Install the required Babel plugins with npm:
 
 ```
-**src/Hello.js**
+npm install --save-dev babel-plugin-react-transform react-transform-hmr
+```
 
-```javascript
-import React, {Component} from 'react';
-import styles from './hello.module.css';
+**.babelrc**
 
-class Hello extends Component{
-  render() {
-    return (
-      <div className={styles.root}>
-        Hello!
-      </div>
-    );
+```json
+{
+  "presets": ["react", "es2015"],
+  "env": {
+    "development": {
+    "plugins": [["react-transform", {
+       "transforms": [{
+         "transform": "react-transform-hmr",
+         "imports": ["react"],
+         "locals": ["module"]
+       }]
+     }]]
+    }
   }
 }
-
-export default Hello;
 ```
-Notice in the code above how the css classes were imported into a variable (styles) and are individually applied to a JSX element.
 
-Also notice that any other component with it's own separate CSS module can also use the same class names without interference: even highly common style names such as "root", "header", "footer", just to name a few, can now be used safely in local scope.
+### Others Plugin
 
-### Other useful loaders
+- `bannerPlugin`: is a simple built-in plugin. Its purpose is to add any given string to the top of the generated bundle file.
+- `HtmlWebpackPlugin`: is a third party webpack plugin that generates the final HTML5 file for you and include all your webpack bundles. This is especially useful for production builds, where hashes that change on every compilation are added to bundle filenames. [Here] for more information.
 
-- `json-loader`
-- `url-loader`
-- `file-loader`
-- `less-loader`
-- `sass-loader`
 
 ## Sources
 - [SurviveJS]
@@ -158,4 +110,5 @@ Also notice that any other component with it's own separate CSS module can also 
 [SurviveJS]: <http://survivejs.com/webpack/introduction/>
 [Pro React]: <http://www.pro-react.com/materials/appendixA/>
 [http://localhost:8080/]: <http://localhost:8080/>
-[CSS modules]: <https://github.com/css-modules/css-modules>
+[react-transform-hmr]: <https://github.com/gaearon/react-transform-hmr>
+[here]: <https://github.com/ampedandwired/html-webpack-plugin>

@@ -1,4 +1,5 @@
 const validate = require('webpack-validator');
+var webpack = require('webpack');
 
 const config = {
   devtool: 'cheap-module-eval-source-map',
@@ -24,11 +25,15 @@ const config = {
       }
     ]
   },
+  plugins: [
+    new webpack.HotModuleReplacementPlugin()
+  ],
   devServer: {
     contentBase: "./dist",
     historyApiFallback: true,
     inline: true,
-    open: true
+    open: true,
+    hot: true
   }
 }
 
