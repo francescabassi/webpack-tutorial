@@ -1,6 +1,6 @@
 # WEBPACK TUTORIAL - STEP 8 - Building for production
 
-In this step we see how to prepare the build release with code minification, bundle splitting, and caching..
+In this step we see how to prepare the build release with code minification, bundle splitting, and caching.
 
 ## Setup
 
