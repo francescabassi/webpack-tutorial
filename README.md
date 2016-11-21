@@ -4,7 +4,7 @@ This is a step by step tutorial to show how set up a React project using Webpack
 
 There are 8 + 1 branches, one for each step of the learning process that leads us to create the basis of our Single Page App that uses Webpack and React.
 
-At the end of the 8th step, we get the boilerplate from which to develop the Web App. You can also find the final boilerplate in the `master`branch.
+At the end of the 8th step, we get the boilerplate from which to develop the Web App. You can also find the final boilerplate in the `master` branch.
 
 In the last step, however, after having understood all the steps needed during the development stage and how to build properly the project, we introduce a little magic with Facebook tool that can generate the boilerplate without any kind of configuration from our part.
 
