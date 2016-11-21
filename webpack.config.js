@@ -1,5 +1,6 @@
 const validate = require('webpack-validator');
 const webpack = require('webpack');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 const config = {
   devtool: 'cheap-module-eval-source-map',
@@ -14,7 +15,7 @@ const config = {
         test: /\.js$/,
         exclude: /node_modules/,
         loader: 'eslint'
-      },
+      }
     ],
     loaders: [
       {
@@ -33,7 +34,10 @@ const config = {
     ]
   },
   plugins: [
-    new webpack.HotModuleReplacementPlugin()
+    new webpack.HotModuleReplacementPlugin(),
+    new HtmlWebpackPlugin({
+      template: __dirname + "/src/index.tmpl.html"
+    }),
   ],
   eslint: {
     configFile: './.eslintrc'
