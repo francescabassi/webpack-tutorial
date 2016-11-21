@@ -32,12 +32,38 @@ ESLint is also integrated so lint warnings are displayed right in the console.
 To build an optimized bundle, run `npm run build`.
 It is minified, correctly envified, and the assets include content hashes for caching.
 
+![Alt text][webpack_create_build_img]
+
 The `package.json` contains only a single build dependency and a few scripts.
+
+**package.json**
+
+```json
+{
+  "name": "hello-world",
+  "version": "0.1.0",
+  "private": true,
+  "devDependencies": {
+    "react-scripts": "0.7.0"
+  },
+  "dependencies": {
+    "react": "^15.4.0",
+    "react-dom": "^15.4.0"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test --env=jsdom",
+    "eject": "react-scripts eject"
+  }
+}
+```
 
 There are no configuration files or complicated folder structures. The tool only generates the files we need to build our app.
 
-“Ejecting” lets us leave Create React App setup at any time. and customize everything we want. This lets us use Create React App as a boilerplate generator.
+![Alt text][webpack_create_structure_img]
 
+“Ejecting” lets us leave Create React App setup at any time and customize everything we want. This lets us use Create React App as a boilerplate generator.
 
 ## Sources
 - [Create Apps with No Configuration]
@@ -47,3 +73,5 @@ There are no configuration files or complicated folder structures. The tool only
 
 [webpack_create_list_img]: ./img/webpack_create_list.png "Create React Apps: command list"
 [webpack_create_start_img]: ./img/webpack_create_start.png "Create React App: start"
+[webpack_create_structure_img]: ./img/webpack_create_structure.png "Create React App: structure"
+[webpack_create_build_img]: ./img/webpack_create_build.png "Create React App: build"
