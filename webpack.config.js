@@ -2,7 +2,7 @@ const validate = require('webpack-validator');
 var webpack = require('webpack');
 
 const config = {
-  devtool: 'cheap-module-eval-source-map',
+  devtool: 'cheap-eval-source-map',
   entry: __dirname + "/src/main.js",
   output: {
     path: __dirname + "/dist",
