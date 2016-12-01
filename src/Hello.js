@@ -2,9 +2,10 @@ import React, {Component} from 'react'
 
 class Hello extends Component{
   render() {
+    // const user = undefined;
     return (
       <div>
-        Hello!
+        Hello! /*{user.name}*/
       </div>
     );
   }
