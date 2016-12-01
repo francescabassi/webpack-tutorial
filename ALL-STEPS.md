@@ -349,10 +349,10 @@ The webpack dev server can be configured in the same `webpack.config.js` configu
 
 Configuration settings include:
 
-- `contentBase`: By default, the webpack-dev-server will serve the files in the root of the project. To serve files from a different folder you need to configure a specific content base.
-- `port`: Which port to use. If omitted, defaults to "8080".
-- `inline`: Set to "true" to insert a small client entry to the bundle to refresh the page on change.
-- `historyApiFallback`: Useful during the development of single page applications that make use of the HTML5 history API. When set to "true", all requests to the webpack-dev-server that do not map to an existing asset will instead by routed straight to /, that is, the index.html file.
+- `contentBase`: by default, the `webpack-dev-server` will serve the files in the root of the project. To serve files from a different folder you need to configure a specific content base.
+- `port`: which port to use. If omitted, defaults to "8080".
+- `inline`: set to `true` to insert a small client entry to the bundle to refresh the page on change.
+- `historyApiFallback`: useful during the development of single page applications that make use of the HTML5 history API. When set to `true`, all requests to the `webpack-dev-server` that do not map to an existing asset will instead by routed straight to /, that is, the `index.html` file.
 - `open`: opens the url in default browser.
 
 **webpack.config.js**
@@ -379,7 +379,7 @@ webpack-dev-server --progress --colors
 
 The `--progress` parameter is only available in the command line. It shows a progress indicator in the terminal during the build step. `--colors` add some colors to the output.
 
-To integrate webpack-dev-server to our project, we can define a new command to the scripts section of `package.json`:
+To integrate `webpack-dev-server` to our project, we can define a new command to the scripts section of `package.json`:
 
 **package.json**
 
@@ -402,11 +402,11 @@ Webpack can generate both inline sourcemaps included within bundles or separate 
 
 Webpack provides seven different ways to produce a source map:
 
-- `eval`: Each module is executed with eval and //@ sourceURL.
-- `cheap-eval-source-map`: Each module is executed with eval and a sourcemap is added as a dataurl to the eval.
-- `cheap-module-eval-source-map`: The fastest way to generate a source map during build. The generated source map will be inlined with the same bundled JavaScript file, without column-mappings. As in the previous option, there are drawbacks in JavaScript execution time, so this option is not appropriate for generating production-ready bundles.
-- `eval-source-map`: Bundles the source code modules using "eval", with nested, complete source map in the same file. This option does generate a full featured source map without a big impact on build time, but with performance and security drawbacks in the JavaScript execution. While it's a good option for using during development, this option should never be used in production.
-- `cheap-source-map`: Generated sourcemaps don't have column mappings. Sourcemaps from loaders are not used.
+- `eval`: each module is executed with eval and //@ sourceURL.
+- `cheap-eval-source-map`: each module is executed with eval and a sourcemap is added as a dataurl to the eval.
+- `cheap-module-eval-source-map`: the fastest way to generate a source map during build. The generated source map will be inlined with the same bundled JavaScript file, without column-mappings. As in the previous option, there are drawbacks in JavaScript execution time, so this option is not appropriate for generating production-ready bundles.
+- `eval-source-map`: bundles the source code modules using "eval", with nested, complete source map in the same file. This option does generate a full featured source map without a big impact on build time, but with performance and security drawbacks in the JavaScript execution. While it's a good option for using during development, this option should never be used in production.
+- `cheap-source-map`: generated sourcemaps don't have column mappings. Sourcemaps from loaders are not used.
 - `cheap-module-source-map`: The fastest way to generate a source map during build. The generated source map will be inlined with the same bundled JavaScript file, without column-mappings. There are drawbacks in JavaScript execution time, so this option is not appropriate for generating production-ready bundles.
 - `source-map`: Generate a complete, full featured source map in a separate file. This option has the best quality of source map, but it does slow down the build process.
 
@@ -566,7 +566,7 @@ render(<Hello />, document.getElementById('content'));
 ### CSS Modules
 
 Modules let the developer break the code down into small, clean and independent units with explicitly declared dependencies.
-A recent project called [CSS modules] aim to bring all these advantages to CSS. With CSS modules, all class names and are scoped locally by default. Webpack embraced the CSS modules proposal from the very beginning, it's built in the CSS loader - all you have to do is activate it by passing the `modules` query string. With this feature enabled, you will be able to export class names from CSS into the consuming component code, locally scoped (so you don't need to worry about having many classes with the same name across different components).
+A recent project called [CSS modules] aim to bring all these advantages to CSS. With CSS modules, all class names are scoped locally by default. Webpack embraced the CSS modules proposal from the very beginning, it's built in the CSS loader - all you have to do is activate it by passing the `modules` query string. With this feature enabled, you will be able to export class names from CSS into the consuming component code, locally scoped (so you don't need to worry about having many classes with the same name across different components).
 
 **webpack.config.js**
 
@@ -1223,7 +1223,7 @@ There are no configuration files or complicated folder structures. The tool only
 [webpack_build_uglify_img]: ./img/webpack_build_uglify.png "build with uglify"
 [webpack_build_vendor_img]: ./img/webpack_build_vendor.png "build with bundle splitting"
 [webpack_build_commons_img]: ./img/webpack_build_commons.png "build with commons chunk"
-[webpack_build_commons_img]: ./img/webpack_build_hash.png "build with hash"
+[webpack_build_hash_img]: ./img/webpack_build_hash.png "build with hash"
 [webpack_build_css_img]: ./img/webpack_build_css.png "build with separated css"
 [webpack_create_list_img]: ./img/webpack_create_list.png "Create React Apps: command list"
 [webpack_create_start_img]: ./img/webpack_create_start.png "Create React App: start"
