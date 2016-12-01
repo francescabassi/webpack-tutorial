@@ -6,6 +6,7 @@ const ExtractTextPlugin = require('extract-text-webpack-plugin');
 
 
 module.exports = {
+  devtool: 'cheap-source-map',
   entry: {
     main: __dirname + "/src/main.js",
     vendor: Object.keys(pkg.dependencies)
